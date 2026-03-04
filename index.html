@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .ocultar {
+            display: none;
+        }
+
+        .mostrar {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>APLICAION DE LOGIN + PANEL PRIVADO</h1>
+    <div id="pantalla1">
+        <label for="usuario">Usuario</label>
+        <input type="text" id="usuario"><br>
+        <label for="password">Contraseña</label>
+        <input type="text" id="password"><br>
+        <input type="button" value="Acceder" id="btn1">
+    </div>
+
+    <div id="pantalla2" class="ocultar">
+        <h1 id="bienvenida"></h1>
+        <label for="nombreTarea">Nombre de la tarea</label>
+        <input type="text" id="nombreTarea"><br>
+        <select id="prioridades">
+            <option value="" disabled>Elige la prioridad...</option>
+            <option value="alta">Alta</option>
+            <option value="media">Media</option>
+            <option value="baja">Baja</option>
+        </select><br>
+        <input type="button" value="Añadir" id="add">
+        <table>
+            <tr>
+                <td>NOMBRE</td>
+                <td>PRIORIDAD</td>
+            </tr>
+            <!-- AAÑADIDO POR JS-->
+        </table><br>
+        <h4 id="total"></h4>
+        <input type="button" value="Cerrar sesión" id="cerrar">
+    </div>
+
+    <script>
+        var TAREAS = [];
+        // CLICK EN PANTALLA 1
+        document.getElementById('btn1').addEventListener('click', () => {
+            // VALIDACION FORMULARIO
+            let usuario = document.getElementById('usuario');
+            let contraseña = document.getElementById('password');
+
+            if (usuario.value != "admin" || contraseña.value != 1234) {
+                let h4 = document.createElement('h4');
+                h4.innerText = 'Error';
+                h4.style.backgroundColor = 'red';
+                h4.style.color = 'white';
+                document.querySelector('#pantalla1').appendChild(h4);
+            } else {
+                // OCULTAR PANTALLA 1
+                document.getElementById('pantalla1').classList.add('ocultar');
+                document.getElementById('pantalla1').classList.remove('mostrar');
+                // MOSTRAR PANTALLA 2
+                document.getElementById('pantalla2').classList.add('mostrar');
+                document.getElementById('pantalla2').classList.remove('ocultar');
+                let h4 = document.getElementById('total');
+                h4.innerText = "Hay " + TAREAS.length + " tareas.";
+            }
+        })
+
+        // CLICK EN AÑADIR TAREAS
+        document.getElementById('add').addEventListener('click', () => {
+            let nombre = document.getElementById('nombreTarea');
+            let prioridades = document.getElementById('prioridades');
+            if (prioridades.value != "" && nombre != "") {
+                TAREAS.push(nombre.value);
+                let tabla = document.querySelector('table');
+                let tr = document.createElement('tr');
+                let td1 = document.createElement('td');
+                let td2 = document.createElement('td');
+                // AÑADIR EN LA TABLA
+                td1.innerText = nombre.value;
+                td2.innerText = prioridades.value;
+
+                tr.append(td1, td2);
+                tabla.appendChild(tr);
+
+                let h4 = document.getElementById('total');
+                h4.innerText = "Hay " + TAREAS.length + " tareas.";
+            }
+        });
+
+        // CLICK EN CERRAR SESION
+        document.getElementById('cerrar').addEventListener('click', () => {
+            // VOLVER A LOGIN
+            document.getElementById('pantalla2').classList.remove('mostrar');
+            document.getElementById('pantalla2').classList.add('ocultar');
+
+            document.getElementById('pantalla1').classList.add('mostrar');
+            document.getElementById('pantalla1').classList.remove('ocultar');
+
+            // VACIAR FORM
+            document.getElementById('nombreTarea').value = "";
+            document.querySelector('table').innerHTML = `<tr>
+                                                            <td> NOMBRE</td >
+                                                            <td>PRIORIDAD</td>
+                                                        </tr>`;
+            // VACIAR ARRAY
+            TAREAS = [];
+        })
+    </script>
+</body>
+
+</html>

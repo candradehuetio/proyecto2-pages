@@ -1,13 +1,16 @@
 name: Lighthouse Report
-on: [push]
+on: [push, workflow_dispatch]
 
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Audit site with Lighthouse
         uses: treosh/lighthouse-config-action@v11
         with:
-          urls: 'https://candradehuetio.github.io/proyecto2-pages/'
-          uploadArtifacts: true # Esto guarda el reporte para que lo descargues
+          # Usamos un servidor temporal local para que no dependa de si la web ya cargó en internet
+          staticDistDir: './' 
+          uploadArtifacts: true
+          temporaryPublicStorage: true

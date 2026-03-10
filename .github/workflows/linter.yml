@@ -1,15 +1,15 @@
-name: HTML Linter
+name: HTML Validation
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  lint:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del código
         uses: actions/checkout@v4
 
-      - name: HTML Check
-        # Usaremos esta versión que es más estable y reconocida
-        uses: ammar-at/html-linter-action@v2
+      - name: Validar HTML
+        # Esta acción es genial porque no requiere archivo de configuración extra
+        uses: Cyb3r-Jak3/html5validator-action@v7.2.0
         with:
-          source: "." # Esto revisará todos los archivos .html en tu raíz
+          root: .

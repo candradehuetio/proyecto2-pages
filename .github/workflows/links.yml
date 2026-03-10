@@ -1,0 +1,12 @@
+name: Check Links
+on: [push, schedule] # Corre en cada push y podrías programarlo
+
+jobs:
+  link-checker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check HTML links
+        uses: lycheeverse/lychee-action@v1.9.0
+        with:
+          args: --verbose --no-progress "*.html"

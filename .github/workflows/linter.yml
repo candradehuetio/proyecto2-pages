@@ -1,0 +1,14 @@
+name: HTML Linter
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Revisar HTML
+        uses: html-validate/html-validate-action@v1
+        with:
+          files: "*.html"

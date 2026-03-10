@@ -1,0 +1,13 @@
+name: Lighthouse Report
+on: [push]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit site with Lighthouse
+        uses: treosh/lighthouse-config-action@v11
+        with:
+          urls: 'https://candradehuetio.github.io/proyecto2-pages/'
+          uploadArtifacts: true # Esto guarda el reporte para que lo descargues

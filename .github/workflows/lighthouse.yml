@@ -5,12 +5,13 @@ jobs:
   lighthouse:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
       - name: Audit site with Lighthouse
-        uses: treosh/lighthouse-config-action@v11
+        # Usamos la acción oficial de Google Chrome
+        uses: foo-software/lighthouse-check-action@master
         with:
-          # Usamos un servidor temporal local para que no dependa de si la web ya cargó en internet
-          staticDistDir: './' 
-          uploadArtifacts: true
-          temporaryPublicStorage: true
+          # Al ser un HTML estático, le decimos que mire el archivo local
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          urls: 'https://candradehuetio.github.io/proyecto2-pages/'

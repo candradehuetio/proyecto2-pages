@@ -1,5 +1,5 @@
 name: HTML Linter
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   lint:
@@ -8,7 +8,8 @@ jobs:
       - name: Checkout del código
         uses: actions/checkout@v4
 
-      - name: Revisar HTML
-        uses: html-validate/html-validate-action@v1
+      - name: HTML Check
+        # Usaremos esta versión que es más estable y reconocida
+        uses: ammar-at/html-linter-action@v2
         with:
-          files: "*.html"
+          source: "." # Esto revisará todos los archivos .html en tu raíz
